@@ -1,0 +1,401 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "saveNewUserFromDto",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/response": {
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "saveFromDto",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/credit": {
+      "post": {
+        "tags": [
+          "credit-controller"
+        ],
+        "operationId": "setUserCredit",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "CREDIT_CONFIRMED",
+                    "CREDIT_REJECTED",
+                    "LAST"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "findUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/list": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "findAllUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/credit/{userIdentityNumber}/{userDateOfBirth}": {
+      "get": {
+        "tags": [
+          "credit-controller"
+        ],
+        "operationId": "findAllByUserIdentityNumberAndUserDateOfBirth",
+        "parameters": [
+          {
+            "name": "userIdentityNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "userDateOfBirth",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Credit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/credit/list": {
+      "get": {
+        "tags": [
+          "credit-controller"
+        ],
+        "operationId": "findALlCredits",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Credit"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "identityNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "salary": {
+            "type": "number",
+            "format": "float"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "guaranteeAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "enumGuaranteeType": {
+            "type": "string",
+            "enum": [
+              "NO_GUARANTEE",
+              "GUARANTEED",
+              "LAST"
+            ]
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "identityNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "salary": {
+            "type": "number",
+            "format": "float"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "guaranteeAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "enumGuaranteeType": {
+            "type": "string",
+            "enum": [
+              "NO_GUARANTEE",
+              "GUARANTEED",
+              "LAST"
+            ]
+          }
+        }
+      },
+      "Credit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "insDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creditAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "userIdentityNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userDateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creditResult": {
+            "type": "string",
+            "enum": [
+              "CREDIT_CONFIRMED",
+              "CREDIT_REJECTED",
+              "LAST"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
